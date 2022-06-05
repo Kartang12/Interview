@@ -1,0 +1,55 @@
+Class vs Structure
+
+Класс — это ссылочный тип, который может быть прямым производным от другого класса и является неявным производным от типа System.Object. В классе определяются операции, которые объект (являющийся экземпляром класса) может выполнять (методы, события или свойства), и данные, которые объект содержит (поля). Обычно класс включает и определение, и реализацию (в отличие, например, от интерфейса, который содержит только определение без реализации), однако один или несколько членов класса могут не иметь реализации.
+
+
+Структура — это тип значения, неявно производный от типа System.ValueType, который, в свою очередь, является производным от типа System.Object. Структуры  полезны для представления значений с небольшими требованиями к памяти 
+
+и для передачи параметров по значению в методы со строгой типизацией параметров. В .NET все типы-примитивы (Boolean, Byte, Char, DateTime, Decimal, Double, Int16, Int32, Int64, SByte, Single, UInt16, UInt32 и UInt64) определяются как структуры.
+
+
+//Первое правило Структуры: Всегда все переменные должны быть инициализированы!
+
+//Второе правило Структуры: Нельзя инициализировать переменные в месте их объявления!
+
+
+В общем случае классы используются для моделирования более сложного поведения или для таких данных, которые будут изменяться после создания объекта класса. Структуры лучше подходят для небольших структур данных, информация в которых не должна изменяться после создания структуры.
+
+Classes Only:
+	Can support inheritance
+	Are reference (pointer) types
+	The reference can be null
+	Have memory overhead per new instance
+
+Structs Only:
+	CanNOT support inheritance
+	Are value types
+	Are passed by value (like integers)
+	Can NOT have a null reference (unless Nullable is used)
+	Do NOT have a memory overhead per new instance - unless 'boxed'
+
+Both Classes and Structs:
+	Are compound data types typically used to contain a few variables that have some logical relationship
+	Can contain methods and events
+	Can support interfaces
+
+
+When to use struct or classes?
+
+
+Struct	 Classes
+1	Structs are value types, allocated either on the stack or inline in containing types.	
+ 	Classes are reference types, allocated on the heap and garbage-collected. 
+
+2 	Allocations and de-allocations of value types are in general cheaper than allocations and de-allocations of reference types.	 
+	Assignments of large reference types are cheaper than assignments of large value types.
+
+3	In structs, each variable contains its own copy of the data (except in the case of the ref and out parameter variables), and an operation on one variable does not affect another variable.
+	In classes, two variables can contain the reference of the same object and any operation on one variable can affect another variable.
+ 
+In this way, struct should be used only when you are sure that:
+	It logically represents a single value, like primitive types (int, double, etc.).
+	It is immutable.
+	It should not be boxed and un-boxed frequently.
+	In all other cases, you should define your types as classes.
+	

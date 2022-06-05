@@ -1,0 +1,111 @@
+Delegates, Events 
+
+    // Объявляем делегат
+    public delegate void AccountStateHandler(string message);
+    // Создаем переменную делегата
+    AccountStateHandler _del;
+
+    // Регистрируем делегат
+    public void RegisterHandler(AccountStateHandler del)
+    {
+        _del = del;
+    }
+
+
+    static void Main(string[] args)
+    {
+        Account account = new Account(200);
+        account.RegisterHandler(new Account.AccountStateHandler(Show_Message)); <---------------
+        account.Withdraw(100);
+        account.Withdraw(150);
+        Console.ReadLine();
+    }
+    private static void Show_Message(String message)	<----------------
+    {
+        Console.WriteLine(message);
+    }
+
+
+
+Action
+Делегат Action является обобщенным, принимает параметры и возвращает значение void:
+
+public delegate void Action<T>(T obj)
+
+
+Predicate
+Делегат Predicate<T>, как правило, используется для сравнения, сопоставления некоторого объекта T определенному условию. В качестве выходного результата возвращается значение true, если условие соблюдено, и false, если не соблюдено:
+
+Predicate<int> isPositive = delegate (int x) { return x > 0; };
+ 
+Console.WriteLine(isPositive(20));
+Console.WriteLine(isPositive(-20));
+
+
+Func
+Он возвращает результат действия и может принимать параметры. Он может принимать до 16 параметров, последний (17) - выходной.
+
+TResult Func<out TResult>()
+TResult Func<in T, out TResult>(T arg)
+
+
+
+
+Func<T1, T2, Tn, ReturnType>
+Action<T1...>
+
+
+Ковариантность позволяет возвращать из метода объект, тип которого является производным от типа, возвращаемого делегатом
+Контрвариантность предполагает возможность передавать в метод объект, тип которого является более универсальным по отношению к типу параметра делегата. 
+
+
+class Account
+{
+    public delegate void AccountHandler(string message);
+    public event AccountHandler Notify;              // 1.Определение события			<-------------------
+    public Account(int sum)
+    {
+        Sum = sum;
+    }
+    public int Sum { get; private set;}
+    public void Put(int sum)    
+    {
+        Sum += sum;
+        Notify?.Invoke($"На счет поступило: {sum}");   // 2.Вызов события	<---------------------
+    }
+    public void Take(int sum)
+    {
+        if (Sum >= sum)
+        {
+            Sum -= sum;
+            Notify?.Invoke($"Со счета снято: {sum}");   // 2.Вызов события
+        }
+        else
+        {
+            Notify?.Invoke($"Недостаточно денег на счете. Текущий баланс: {Sum}"); ;
+        }
+    }
+}
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Account acc = new Account(100);
+
+        acc.Notify += DisplayMessage;   // Добавляем обработчик для события Notify		<---------------
+
+        acc.Put(20);    // добавляем на счет 20
+        Console.WriteLine($"Сумма на счете: {acc.Sum}");
+        acc.Take(70);   // пытаемся снять со счета 70
+        Console.WriteLine($"Сумма на счете: {acc.Sum}");
+        acc.Take(180);  // пытаемся снять со счета 180
+        Console.WriteLine($"Сумма на счете: {acc.Sum}");
+        Console.Read();
+    }
+    private static void DisplayMessage(string message)						<-------------------
+    {
+        Console.WriteLine(message);
+    }
+}

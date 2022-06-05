@@ -1,0 +1,17 @@
+You must remember how you differentiate between a normal MVC Controller and a Web API Controller...
+
+WebAPI Controllers enforces this annotation [ApiController] and must inherits from ControllerBase:
+
+[ApiController]
+public class PeopleController : ControllerBase {
+   //Your API methods here
+}
+
+A normal MVC Controller only inherits from Controller base class:
+
+
+public class PeopleController : Controller {
+   //Your Action methods here...
+}
+
+Those already create configuration for your APP which becomes easier for you Hosting environment to know what is going and what to return when.

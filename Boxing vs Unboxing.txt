@@ -1,0 +1,62 @@
+Boxing / Unboxing
+
+Упаковка (boxing) предполагает преобразование объекта значимого типа (например, типа int) к типу object. При упаковке общеязыковая среда CLR обертывает значение в объект типа System.Object и сохраняет его в управляемой куче (хипе). 
+Распаковка (unboxing), наоборот, предполагает преобразование объекта типа object к значимому типу. Упаковка и распаковка ведут к снижению производительности, так как системе надо осуществить необходимые преобразования.
+
+Кроме того, существует другая проблема - проблема безопасности типов. Так, мы получим ошибку во время выполнения программы, если напишем следующим образом:
+
+Account account2 = new Account { Sum = 4000 };
+account2.Id = "4356";
+int id2 = (int)account2.Id;     // Исключение InvalidCastException
+
+Мы можем не знать, какой именно объект представляет Id, и при попытке получить число в данном случае мы столкнемся с исключением InvalidCastException.
+
+
+
+
+class Account<T>
+{
+    public T Id { get; set; }
+    public int Sum { get; set; }
+}
+
+Account<int> account1 = new Account<int> { Sum = 5000 };
+Account<string> account2 = new Account<string> { Sum = 4000 };
+account1.Id = 2;        // упаковка не нужна
+account2.Id = "4356";
+int id1 = account1.Id;  // распаковка не нужна
+string id2 = account2.Id;
+Console.WriteLine(id1);
+Console.WriteLine(id2);
+
+
+
+
+Иногда возникает необходимость присвоить переменным универсальных параметров некоторое начальное значение, 
+в том числе и null. Но напрямую мы его присвоить не можем:
+
+T id = null;
+
+В этом случае нам надо использовать оператор default(T). 
+Он присваивает ссылочным типам в качестве значения null, а типам значений - значение 0:
+
+
+You can cast an int to any numeral type, to Nullable<int>, to ValueType, to Object, and to any type where a explicit or implicit conversion has been defined.
+
+
+What is the use of boxing/unboxing?
+
+Say you have an integer and you want to put it into an ArrayList.
+ArrayList.Add expects an object parameter.
+You need to put your integer into an object variable.
+An object variable is a reference.
+So you need to create an object to which you can have a reference.
+
+Creating that object and taking a reference to it is boxing.
+
+When you retrieve the value from the ArrayList, you can only retrieve an object.
+If you want to use it as an integer, you need to retrieve the value from the object.
+
+Taking the value from the object and putting it on the stack is unboxing.
+
+Подвержены боксингу и анбоксингу

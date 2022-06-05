@@ -1,0 +1,112 @@
+Коллекции
+
+Необобщенные коллекции
+Необобщенные или универсальные коллекции определены в пространстве имен System.Collection.Generic. Самые популярные из этого пространства имен – в списке ниже:
+
+List – класс коллекции, предоставляющий доступ к элементам по индексу. Содержит методы изменения коллекции, сортировки элементов и поиска по элементам.
+Dictionary – класс коллекции, в основе которой лежат пара ключ/значение. Элементы упорядочены по ключу. Доступ к элементам производится через ключ. 
+Queue – класс коллекции, реализующий модель FIFO (первым пришел – первым ушел). 
+Stack – класс коллекции, реализующий модель LIFO (последним пришел – первым вышел). 
+SortedList – класс коллекции, дополняющий функциональность типа List возможностью реализовать свой механизм сортировки путем реализации класса интерфейса IComparer. 
+
+Любой из типов, перечисленных выше применяется в случае, если все элементы коллекции одного типа данных.
+
+Обобщенные коллекции
+Классы обобщенных коллекций определены в пространстве имен System.Collections библиотеки базовых типов. Самые часто используемые представлены в списке ниже:
+
+Queue - класс коллекции, реализующий модель FIFO (первым пришел – первым ушел)
+Stack – класс коллекции, реализующий модель LIFO (последним пришел – первым вышел)
+ArrayList – динамический массив, способен увеличивать размер при добавлении нового элемента. 
+HashTable – класс коллекции, в основе которой лежат пара ключ/значение. Значения упорядочены по хэш-коду. 
+
+
+
+Queue
+	Enqueue(T)	Adds an item into the queue.
+	Dequeue	Returns an item from the beginning of the queue and removes it from the queue.
+	Peek(T)	Returns an first item from the queue without removing it.
+	Contains(T)	Checks whether an item is in the queue or not
+	Clear()	Removes all the items from the queue.
+
+Stack
+	Push(T)	Inserts an item at the top of the stack.
+	Peek()	Returns the top item from the stack.
+	Pop()	Removes and returns items from the top of the stack.
+	Contains(T)	Checks whether an item exists in the stack or not.
+	Clear()	Removes all items from the stack.
+
+
+
+Array vs ArrayList
+
+	Array Declaration & Initialization:
+	int[] arr = new int[5]
+	int[] arr = new int[5]{1, 2, 3, 4, 5};
+	int[] arr = {1, 2, 3, 4, 5};	
+
+	ArrayList Declaration & Initialization:
+	ArrayList arList = new ArrayList();
+	arList.Add(1);
+	arList.Add("Two");
+	arList.Add(false);
+
+	Array stores a fixed number of elements. The size of an Array must be specified at the time of initialization.	
+	ArrayList grows automatically and you don't need to specify the size.
+
+	Array is strongly typed. This means that an array can store only specific type of items\elements.	
+	ArrayList can store any type of items\elements.
+
+	No need to cast elements of an array while retrieving because it is strongly typed and stores a specific type of items only.	
+	The items of ArrayList need to be cast to an appropriate data type while retrieving. So, boxing and unboxing happens.
+
+	Array Performs faster than ArrayList because it is strongly typed.	
+	ArrayListPerforms slows because of boxging and unboxing.
+
+
+Hashtable vs Dictionary
+	Hashtable is included in the System.Collections namespace.	
+	Dictionary is included in the System.Collections.Generic namespace.
+
+	Hashtable is a loosely typed (non-generic) collection, this means it stores key-value pairs of any data types.	
+	Dictionary is a generic collection. So it can store key-value pairs of specific data types.
+
+	Hashtable is thread safe.
+	Only public static members are thread safe in Dictionary.
+
+	Hashtable returns null if we try to find a key which does not exist.	
+	Dictionary throws an exception if we try to find a key which does not exist.
+
+	Data retrieval is slower than dictionary because of boxing-unboxing.	
+	Data retrieval is faster than Hashtable.
+
+
+
+
+
+
+
+использовать пользовательский класс  как ключ в Dictionary. Что для этого надо поменять (добавить) в классе?
+
+override GetHashCode  and Equals
+
+class Foo 
+{ 
+    public string Name { get; set;} 
+    public int FooID {get; set;}
+
+    public override int GetHashCode()             
+    {  
+           return FooID; 
+    }
+
+    public override bool Equals(object obj) 
+    { 
+             return Equals(obj as Foo); 
+    }
+
+    public bool Equals(Foo obj)
+     { 
+          return obj != null && obj.FooID == this.FooID; 
+     }
+}
+

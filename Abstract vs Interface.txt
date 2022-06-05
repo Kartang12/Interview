@@ -1,0 +1,13 @@
+Abstract vs Interface
+
+Абстрактный класс - создает функционал, который могут реализовывать или переопределять наследники.
+Интерфейс - определяет функционал, но не реализует его.
+
+Можно наследовать только 1 класс, но много интерфейсов.
+
+1. В abstract может быть реализация методово и свойств. В interface только сигнатура метода.
+2. Abstract может содержать поля
+3. Abstract может наследоваться от abstract и interface. Interface - только от Interface
+
+Interface vs Abctract, Implicit implementation
+https://www.infoworld.com/article/2928719/when-to-use-an-abstract-class-vs-interface-in-csharp.html#:~:text=The%20short%20answer%3A%20An%20abstract,take%20advantage%20of%20multiple%20interfaces.

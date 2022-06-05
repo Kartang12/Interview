@@ -1,0 +1,142 @@
+Assembly
+
+коллекция типов и ресурсов, собранных для совместной работы
+образуют логическую функциональную единицу. 
+создаются в виде (EXE) или файла библиотеки динамической компоновки (DLL) и являются стандартными блоками приложений .NET. Они предоставляют сведения для среды CLR, которые нужны для распознавания реализаций типов.
+
+Сборки создаются из управляемых модулей:
+Код -> IL-код -> управляемый модуль (УМ)
+УМ - переносимый исполняемый файл 
+
+Части УМ:
+	заголовок (PE32/PE32+)
+	Заголовок CLR - инфа для работы CLR
+	IL-код
+	Метаданные (что хранится, как интерпритировать, связи с другими сборками)
+
+Модули группируются в сборки.
+
+
+Сборки имеют следующие свойства.
+	Сборки реализованы как файлы EXE или DLL.
+	Сборки загружаются в память только в том случае, если они реально используются. 
+
+
+ДЛЯ CLR
+
+Сборки предоставляют сведения, которые нужны для распознавания реализаций типов. 
+Для среды выполнения тип не существует вне контекста сборки.
+
+Сборка определяет следующие сведения:
+	- Код, выполняемый средой CLR. 
+	каждая сборка может иметь только одну точку входа: DllMain, WinMain или Main.
+
+	- Манифест
+	Указывает типы и ресурсы, предоставляемые за пределами сборки, а также перечисляет другие сборки, от которых она зависит. При отсутствии связанного манифеста сборки IL-код выполняться не будет.
+
+	- Граница версий. 
+	Сборка является наименьшей единицей с поддержкой версий в среде CLR. 
+	Версия для всех типов и ресурсов в одной сборке назначается как единому целому. 
+
+	- Единица развертывания. 
+	При запуске приложения могут присутствовать лишь сборки, первоначально вызываемые приложением. 
+	Другие сборки, например, содержащие ресурсы локализации или вспомогательные классы, могут извлекаться по требованию. 
+
+
+Создание сборки
+
+Сборки могут быть статическими или динамическими.
+Статическая - такой двоичный модуль .NET, который загружается прямо из хранилища на диске, т.е. на момент запроса CLR-средой он находится в физическом файле (или файлах, если сборка многофайловая) где-то на жестком диске. Как не трудно догадаться, при каждой компиляции исходного кода C# в результате всегда получается статическая сборка.
+
+Динамическая - создается в памяти "на лету" за счет использования типов из пространства имен System.Reflection.Emit. System.Reflection.Emit позволяет сделать так, чтобы сборка с ее модулями, определениями типов и логикой реализации на CIL создавалась во время выполнения. После этого сборку в памяти можно сохранять в дисковый файл, превращая ее в статическую.
+
+
+
+==============================================================================================
+
+Ресурс представляет собой любые неисполняемые данные, которые логически развертываются вместе с приложением. Ресурсы могут отображаться в приложении в виде сообщений об ошибках либо как часть интерфейса пользователя. Ресурсы могут содержать данные различных видов, включая символьные строки, изображения и объекты. 
+(Для записи сохраняемых объектов в файл ресурсов объекты должны быть сериализуемыми.) 
+Благодаря хранению данных в файле ресурсов сами данные можно изменять без перекомпиляции всего приложения. Это также позволяет хранить данные в одном месте и исключает необходимость в использовании жестко закодированных данных, которые хранятся в нескольких местах.
+
+==============================================================================================
+
+Глобальный кэш сборок (GAC)
+   
+кэш кода в среде CLR на уровне компьютера. 
+В GAC сохраняются сборки, предназначенные для совместного использования на компьютере несколькими приложениями.
+
+Прежде чем включить сборки в глобальный кэш сборок, нужно назначить им строгие имена.
+Организовывать совместное использование сборок путем установки их в глобальный кэш следует только при необходимости. 
+Как правило, зависимости между сборками следует сохранять закрытыми, а сами сборки нужно размещать в папке приложения, если они не предназначены для совместного использования. 
+
+==============================================================================================
+
+
+Manifests
+
+Each assembly's manifest performs the following functions:
+
+	Enumerates the files that make up the assembly.
+--->Governs how references to the assembly's types and resources map to the files that contain their declarations and implementations.
+	Enumerates other assemblies on which the assembly depends.
+	Provides a level of indirection between consumers of the assembly and the assembly's implementation details.
+	Renders the assembly self-describing.
+
+
+Information contained in the assembly manifest
+
+
+Assembly name	
+A text string specifying the assembly's name.
+
+Version number
+A major and minor version number, and a revision and build number. The common language runtime uses these numbers to enforce version policy.
+
+Culture	
+Information on the culture or language the assembly supports. This information should be used only to designate an assembly as a satellite assembly containing culture- or language-specific information. (An assembly with culture information is automatically assumed to be a satellite assembly.)
+
+Strong name information	
+The public key from the publisher if the assembly has been given a strong name.
+
+List of all files in the assembly	
+A hash of each file contained in the assembly and a file name. Note that all files that make up the assembly must be in the same directory as the file containing the assembly manifest.
+
+Type reference information	
+Information used by the runtime to map a type reference to the file that contains its declaration and implementation. This is used for types that are exported from the assembly.
+
+Information on referenced assemblies	
+A list of other assemblies that are statically referenced by the assembly. Each reference includes the dependent assembly's name, assembly metadata (version, culture, operating system, and so on), and public key, if the assembly is strong named.
+
+
+
+
+
+
+
+
+
+1) Private - Assembly available only to clients in the same 
+directory.
+2) Shared - Assemblies in GAC
+3) Satelite - Assembly in the specific directory of the locale.
+
+
+There are two types of assemblies are there in .net. They are,
+1. Private Assemblies and
+2. Public/Shared Assemblies.
+Private Assembly:- can be accessed only by single application in a system. It is stored in the application's directory .
+Public Assembly-can be accessed by multiple applications in a system. This is about installing the assembly in GAC (global assembly cache).GAC contains a collection of shared assemblies.Assembly file format(.exe or .dll)
+
+
+
+
+
+
+
+CTS Modificators:
+
+Accessibility Levels: Using the four access modifiers to declare six levels of accessibility.
+
+Accessibility Domain: Specifies where, in the program sections, a member can be referenced.
+
+Restrictions on Using Accessibility Levels: A summary of the restrictions on using declared accessibility levels.
