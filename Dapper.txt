@@ -1,0 +1,29 @@
+Dapper + postgres
+
+Sql server vs Postgres 
+
+In(1, 2, 3...) = ANY(1, 2, 3...)
+
+
+
+Dapper
+
+IEnumerble<Entity_Type> = connection.Query<Entity_Type>("Select...", paramsObject);
+
+SP
+Bills bill = connection.QuerySingle<Bills>("SelectBill", prmsOBject, null, null, CommandType.StoredProcedure);
+
+
+QueySingle == Single in EF
+
+QueryFirst
+applies the TOP 1 clause to the SQL query that it generates and executes on the database.
+
+QueryMultiple - выполнить несколько запросов
+var result = connection.QuerySingle<Bills>("select * from Bills; select * from items");
+
+var bills = result.Read<Bills>().ToList();
+var items = result.Read<Items>().ToList();
+
+Update
+connection.Execute("querry", paramsObject)
