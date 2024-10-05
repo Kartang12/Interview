@@ -1,0 +1,55 @@
+Какие проблемы были с производительностью на втором проекте?
+
+Mid/Sin?
+
+Abstract class
+	AC can have constructor
+	Hiding vs overriding
+	Virtual methods table
+	Sealed feature
+
+Async
+	Task vs ValueTask
+	Task.WhenAll vs Task.WaitAll
+	Как ограничишь число потоков, одновременно работающих с одним участком кода
+
+Span - почему быстрый?
+
+Reflection? Where?
+	Automapper
+	DI -> Optimized
+	Controllers
+	Requests body parsing
+	Moq
+
+Deployment
+	Blue/Green
+	Canary
+
+Patterns
+	
+
+EF/ Dapper/ ADO
+	
+
+Как выберешь базу данных для приложения? (Реляционная, документоориентированная, колоночная)
+
+
+Каким образом оптимизировал хранимки на 3 проекте?
+
+В реляционках зачем нужны внешние ключи?
+Типы индексов?
+Что знаешь про ключевое слово Include?
+Знаешь про шардирование?
+
+Стратегии кэширования?
+
+
+
+
+Что такое мультитеннантность?
+
+
+SO SQL)))
+
+
