@@ -192,8 +192,8 @@ CREATE TABLE [dbo].[Users] (
     [Id]           INT            IDENTITY (1, 1) NOT NULL,
     [Login]        NVARCHAR (MAX) NULL,
     [Password]     NVARCHAR (MAX) NULL,
-    [Profile_Name] NVARCHAR (MAX) NULL,						<===========
-    [Profile_Age]  INT            NULL,						<===========
+    [Profile_Name] NVARCHAR (MAX) NULL,				<===========
+    [Profile_Age]  INT            NULL,				<===========
     CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
