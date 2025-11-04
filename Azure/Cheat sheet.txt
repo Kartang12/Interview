@@ -1,0 +1,24 @@
+AZURE COST CHEAT-SHEET
+────────────────────
+Pricing Models
+□ PAYG          – per sec/min
+□ Reserved (RI) – 1-3 yr → 72%
+□ Savings Plan  – $/hr flexible
+□ Spot          – up to 90%, evictable
+
+Estimate
+1. Pricing Calculator
+2. Cost Management (budgets, forecast)
+3. Manual: hours × $/hr × discount
+
+Optimize (Top 5)
+1. Right-size + Advisor
+2. RI / Savings Plan
+3. Auto-scale to zero
+4. Storage lifecycle (Hot→Cool→Archive)
+5. Hybrid Benefit
+
+Tools
+□ Azure Advisor
+□ Cost Management + Billing
+□ TCO Calculator (vs AWS/on-prem)
