@@ -22,3 +22,7 @@ Tools
 □ Azure Advisor
 □ Cost Management + Billing
 □ TCO Calculator (vs AWS/on-prem)
+
+
+SLA
+https://azurecharts.com/sla
