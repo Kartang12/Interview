@@ -1,0 +1,3 @@
+What is the primary purpose: Replicate current functionality or Redesign processes? Is it a "lift and shift" project?
+
+What are the key Success Criteria for the new system?
